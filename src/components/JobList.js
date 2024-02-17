@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom';
 import { formatDate } from '../lib/formatters';
+import {deleteJob} from "../lib/graphql/queries";
 
 function JobList({ jobs }) {
   return (
     <ul className="box">
       {jobs.map((job) => (
-        <JobItem key={job.id} job={job} />
+        <JobItem key={job.id} job={job}/>
       ))}
     </ul>
   );
 }
 
-function JobItem({ job }) {
+function JobItem({ job}) {
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const id = job.id;
+        await deleteJob({id});
+        window.location.reload();
+    };
+
   const title = job.company
     ? `${job.title} at ${job.company.name}`
     : job.title;
@@ -25,6 +34,7 @@ function JobItem({ job }) {
           {title}
         </Link>
       </div>
+      <button className="delete is-medium" onClick={handleSubmit}></button>
     </li>
   );
 }

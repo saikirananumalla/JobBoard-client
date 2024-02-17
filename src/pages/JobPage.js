@@ -34,6 +34,7 @@ function JobPage() {
           {job.description}
         </p>
       </div>
+      <button className="button">Update</button>
     </div>
   );
 }
